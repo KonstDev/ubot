@@ -22,7 +22,11 @@ def funny(_, msg):
             kek += 1
     msg.edit(new_text)
  
-# Команда type
+# 🪜
+@app.on_message(filters.command("trap", prefixes=".") & filters.me)
+def trap(_, msg):
+    msg.edit("**It's a trap!**")
+
 @app.on_message(filters.command("type", prefixes=".") & filters.me)
 def type(_, msg):
     orig_text = msg.text.split(".type ", maxsplit=1)[1]
@@ -64,6 +68,6 @@ def type(_, msg):
     msg.edit('**тЯнОчКу** **Бы**')
 @app.on_message(filters.command("piar", prefixes=".") & filters.me)
 def mybots(_, msg):
-    msg.edit('My bots: \n 1) @howpythonbot \n 2)@whatsciencebot \n 3)@wplangbot')
+    msg.edit('My bots: \n 1)@howpythonbot \n 2)@whatsciencebot \n 3)@wplangbot')
  
 app.run() 
