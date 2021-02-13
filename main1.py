@@ -36,14 +36,22 @@ def trap(_, msg):
 
 @app.on_message(filters.command("eval", prefixes=".") & filters.me)
 def eva_l(_, msg):
+        error = 0
         toeval = msg.text.split(".eval ", maxsplit=1)[1]
         ret_str = "**Expression:**\n"
         ret_str += toeval
         ret_str += '\n'
         ret_str += "**Result:**\n"
-        ret_str += str(eval(toeval))
-        msg.edit(ret_str)
-
+        try:
+            ret_str += str(eval(toeval))
+        except Exception as e:
+            error = 1
+            #ret_str = ('**Invalid** **expression** **format**')
+        if error == 0:
+            msg.edit(ret_str)
+        else:
+            msg.edit('**Invalid** **expression** **format**')
+            
 @app.on_message(filters.command("type", prefixes=".") & filters.me)
 def type(_, msg):
     orig_text = msg.text.split(".type ", maxsplit=1)[1]
