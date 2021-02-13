@@ -38,10 +38,12 @@ def trap(_, msg):
 def eva_l(_, msg):
         error = 0
         toeval = msg.text.split(".eval ", maxsplit=1)[1]
+        toeval_edit = toeval
+        toeval_edit = toeval.replace('**', '^^')
         ret_str = "**Expression:**\n"
-        ret_str += toeval
+        ret_str += toeval_edit
         ret_str += '\n'
-        ret_str += "**Result:**\n"
+        ret_str += "**Result**:\n"
         try:
             ret_str += str(eval(toeval))
         except Exception as e:
