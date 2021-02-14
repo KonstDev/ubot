@@ -1,8 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
-
 from pyrogram.types import ChatPermissions
-
+import translators as ts
 import time
 from time import sleep
 import random
@@ -24,14 +23,27 @@ def funny(_, msg):
             kek += 1
     msg.edit(new_text)
 
-
+@app.on_message(filters.command("translate", prefixes=".") & filters.me)
+def trans_late(_, msg):
+    translator = Translator()
+    #new_text = ''
+    orig_text = msg.text.split(".translate ", maxsplit=1)[1]
+    #new_text = translator.translate(orig_text, dest='ru')
+    new_text = ts.bing(orig_text, to_language='ru')
+    ret_str = "**Original:**\n"
+    ret_str += orig_text
+    ret_str += '\n'
+    ret_str += "**Translation:**\n"
+    ret_str += str(new_text)
+    #print(ret_str)
+    msg.edit(ret_str)
 # eval
 
 # 🪜
 @app.on_message(filters.command("trap", prefixes=".") & filters.me)
 def trap(_, msg):
     msg.edit("**It's a trap!**")
-
+    
 #eval
 
 @app.on_message(filters.command("eval", prefixes=".") & filters.me)
@@ -43,7 +55,7 @@ def eva_l(_, msg):
         ret_str = "**Expression:**\n"
         ret_str += toeval_edit
         ret_str += '\n'
-        ret_str += "**Result**:\n"
+        ret_str += "**Result:\n"
         try:
             ret_str += str(eval(toeval))
         except Exception as e:
