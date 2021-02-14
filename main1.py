@@ -23,13 +23,21 @@ def funny(_, msg):
             kek += 1
     msg.edit(new_text)
 
+tr_lang = 'ru'
+
+@app.on_message(filters.command("chlang", prefixes=".") & filters.me)
+def chlang(_, msg):
+    global tr_lang
+    tr_lang = msg.text.split(".chlang ", maxsplit=1)[1]
+    msg.edit('**Done!**')
+
 @app.on_message(filters.command("translate", prefixes=".") & filters.me)
 def trans_late(_, msg):
-    translator = Translator()
     #new_text = ''
     orig_text = msg.text.split(".translate ", maxsplit=1)[1]
     #new_text = translator.translate(orig_text, dest='ru')
-    new_text = ts.bing(orig_text, to_language='ru')
+    new_text = ts.google(orig_text, to_language=tr_lang)
+    print(tr_lang)
     ret_str = "**Original:**\n"
     ret_str += orig_text
     ret_str += '\n'
