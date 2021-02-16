@@ -47,6 +47,20 @@ def trans_late(_, msg):
     msg.edit(ret_str)
 # eval
 
+newlang = 'en'
+
+@app.on_message(filters.command("lang", prefixes=".") & filters.me)
+def chlang(_, msg):
+    global newlang
+    newlang = msg.text.split(".lang ", maxsplit=1)[1]
+    msg.edit('**Done!**')
+
+@app.on_message(filters.command("t", prefixes=".") & filters.me)
+def translate_mini(_, msg):
+    orig_text = msg.text.split(".t", maxsplit=1)[1]
+    new_text = ts.google(orig_text, to_language=newlang)
+    msg.edit(new_text)
+
 # 🪜
 @app.on_message(filters.command("trap", prefixes=".") & filters.me)
 def trap(_, msg):
