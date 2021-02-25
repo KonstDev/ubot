@@ -132,6 +132,14 @@ def type(_, msg):
     msg.edit('**тЯнОчКу** **Бы**')
 
 
+@app.on_message(filters.command("tbspam", prefixes=".") & filters.me)
+def tbspam(_, msg):
+    n = int(msg.text.split(".tbspam", maxsplit=1)[1])
+    for i in range(0, n):
+        sleep(0.03)
+        app.send_message(msg.chat.id, "Тяночку бы!")
+    msg.edit("YES, CAPTAIN! SPAMMING " + str(n) + " TIMES")
+
 @app.on_message(filters.command("piar", prefixes=".") & filters.me)
 def mybots(_, msg):
     msg.edit('My bots: \n 1)@howpythonbot \n 2)@whatsciencebot \n 3)@wplangbot')
