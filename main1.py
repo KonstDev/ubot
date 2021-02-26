@@ -2,6 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import ChatPermissions
 import translators as ts
+import whois
 import time
 from time import sleep
 import random
@@ -25,6 +26,19 @@ def funny(_, msg):
 
 tr_lang = 'ru'
 
+@app.on_message(filters.command("whois", prefixes=".") & filters.me)
+def who_is(_, msg):
+    domain = msg.text.split(".whois", maxsplit=1)[1]
+    er = False
+    try:
+        dom = whois.query(domain).__dict__
+    except Exception as e:
+        er = True
+        #print(e)
+    if (er == False):
+        msg.edit('``' + str(dom) + '``')
+    if (er == True):
+        msg.edit('**Не ворк**')
 @app.on_message(filters.command("chlang", prefixes=".") & filters.me)
 def chlang(_, msg):
     global tr_lang
@@ -37,7 +51,7 @@ def trans_late(_, msg):
     orig_text = msg.text.split(".translate ", maxsplit=1)[1]
     #new_text = translator.translate(orig_text, dest='ru')
     new_text = ts.google(orig_text, to_language=tr_lang)
-    print(tr_lang)
+    #print(tr_lang)
     ret_str = "**Original:**\n"
     ret_str += orig_text
     ret_str += '\n'
