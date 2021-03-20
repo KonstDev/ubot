@@ -179,6 +179,17 @@ def tbspam(_, msg):
         sleep(0.03)
         app.send_message(msg.chat.id, "Тяночку бы!")
     msg.edit("YES, CAPTAIN! SPAMMING " + str(n) + " TIMES")
+    
+@app.on_message(filters.command("spam", prefixes=".") & filters.me)
+def spam(_, msg):
+    n = int(msg.text.split(" ")[1])
+    spam_a = msg.text.split(" ")[2]
+    # msg.text.split("#", maxsplit=1)[1]
+    msg.edit(spam_a)
+    for i in range(0, n - 1):
+        sleep(0.05)
+        app.send_message(msg.chat.id, spam_a)
+    #msg.edit("YES, CAPTAIN! SPAMMING " + str(n) + " TIMES")
 
 @app.on_message(filters.command("piar", prefixes=".") & filters.me)
 def mybots(_, msg):
