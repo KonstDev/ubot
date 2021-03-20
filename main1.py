@@ -4,6 +4,8 @@ from pyrogram.types import ChatPermissions
 import translators as ts
 import whois
 import time
+import os
+
 from time import sleep
 import random
 
@@ -39,6 +41,30 @@ def who_is(_, msg):
         msg.edit('``' + str(dom) + '``')
     if (er == True):
         msg.edit('**Не ворк**')
+        
+@app.on_message(filters.command("eval_l", prefixes=".") & filters.me)
+def eval_os(_, msg):
+        error = 0
+        toeval = msg.text.split(".eval_l ", maxsplit=1)[1]
+        toeval_edit = toeval
+        toeval_edit = toeval.replace('**', '^^')
+        ret_str = "**Expression:**\n"
+        ret_str += toeval_edit
+        ret_str += '\n'
+        ret_str += "**Result**:\n"
+        help_plz = '```' +  os.popen(toeval).read() + '```'
+        ret_str += str(help_plz)
+       # try:
+      #  ret_str += str(os.system(toeval))
+     #   except Exception as e:
+         #   error = 1
+            #ret_str = ('**Invalid** **expression** **format**')
+       # if error == 0:
+        msg.edit(ret_str)
+       # else:
+       #     msg.edit('**Invalid** **expression** **format**')
+        #print(str(os.system(toeval)))
+        
 @app.on_message(filters.command("chlang", prefixes=".") & filters.me)
 def chlang(_, msg):
     global tr_lang
